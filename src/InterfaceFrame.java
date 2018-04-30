@@ -13,76 +13,27 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
     JPanel panel = new JPanel();
 
     //创建中间件和组件
-    //Create button
+    //创建button
     private JButton input;
     private JButton main_info;
+    private JButton check;
     private JButton validate;
     private JButton reset;
-    //Drop down boxes
-    private JComboBox scop;
-    private JComboBox cond_name;
-    private JComboBox cond_symbol;
-    //Input field of number
+    
+    //创建文本行
     private JTextField query_input;
-    //TextArea
+    //创建显示框
     private JTextArea information;
     private JTextArea show;
-    //FileChooser
+    //创建FileChooser
     private JFileChooser chooser;
-
-    //Button that add condition
-    private JButton addContinue;
-    private JButton addFinish;
-    private JButton init;
-
-
-    private String STR;
 
 
     //Used for saving the ArrayList<Wine>--wines in here and prepare be used
     public ArrayList<Wine> SavingWineSamples;
 
-    public JComboBox getScop() {
-        return scop;
-    }
-    public void setScop(JComboBox scop) {
-        this.scop = scop;
-    }
+   
 
-    public JComboBox getCond_name() {
-        return cond_name;
-    }
-    public void setCond_name(JComboBox cond_name) {
-        this.cond_name = cond_name;
-    }
-
-    public JComboBox getCond_symbol() {
-        return cond_symbol;
-    }
-    public void setCond_symbol(JComboBox cond_symbol) {
-        this.cond_symbol = cond_symbol;
-    }
-
-    public JButton getAddContinue() {
-        return addContinue;
-    }
-    public void setAddContinue(JButton addContinue) {
-        this.addContinue = addContinue;
-    }
-
-    public JButton getAddFinish() {
-        return addFinish;
-    }
-    public void setAddFinish(JButton addFinish) {
-        this.addFinish = addFinish;
-    }
-
-    public JButton getInit() {
-        return init;
-    }
-    public void setInit(JButton init) {
-        this.init = init;
-    }
 
     //attributes getter and setter
 
@@ -99,6 +50,13 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
     }
     public void setMain_info(JButton main_info) {
         this.main_info = main_info;
+    }
+
+    public JButton getCheck() {
+        return check;
+    }
+    public void setCheck(JButton check) {
+        this.check = check;
     }
 
     public JButton getValidate() {
@@ -150,13 +108,6 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
         this.chooser = chooser;
     }
 
-    public String getSTR() {
-        return STR;
-    }
-    public void setSTR(String STR) {
-        this.STR = STR;
-    }
-
     //构造方法InterfaceFrame()
     public InterfaceFrame(){
         //调用初始化函数
@@ -167,53 +118,20 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
 
         //getContentPane()是用来获取JFrame内部ContentPane，因为只有它可以add组件(已加入变量中)进来
         container.add(panel);
-
-        //Choose condition scope
-        container.add(getScop());
-        getScop().addItem("red");
-        getScop().addItem("white");
-        //Choose condition name
-        container.add(getCond_name());
-        getCond_name().addItem("f_acid");
-        getCond_name().addItem("v_acid");
-        getCond_name().addItem("c_acid");
-        getCond_name().addItem("r_sugar");
-        getCond_name().addItem("chlorid");
-        getCond_name().addItem("f_sulf");
-        getCond_name().addItem("t_sulf");
-        getCond_name().addItem("dens");
-        getCond_name().addItem("pH");
-        getCond_name().addItem("sulph");
-        getCond_name().addItem("alc");
-        getCond_name().addItem("qual");
-        //Choose condition symbol
-        container.add(getCond_symbol());
-        getCond_symbol().addItem(">=");
-        getCond_symbol().addItem(">");
-        getCond_symbol().addItem("<=");
-        getCond_symbol().addItem("<");
-        getCond_symbol().addItem("=");
-        getCond_symbol().addItem("!=");
-        //Input condition number
         container.add(getQuery_input());
 
         container.add(getInput());
         container.add(getMain_info());
         container.add(new JScrollPane(getInformation()));
         container.add(new JScrollPane(getShow()));
-
-        container.add(getInit());
-        container.add(getAddContinue());
-        container.add(getAddFinish());
+        container.add(getCheck());
         container.add(getValidate());
         container.add(getReset());
 
         //给button和textfield设置监听器
-        getInit().addActionListener(this);
-        getAddContinue().addActionListener(this);
-        getAddFinish().addActionListener(this);
         getInput().addActionListener(this);
         getMain_info().addActionListener(this);
+        getCheck().addActionListener(this);
         getValidate().addActionListener(this);
         getReset().addActionListener(this);
     }
@@ -229,45 +147,20 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
         chooser.setSize(2,20);
         setChooser(chooser);
 
-        //Create JConboBox
-        add(new JLabel("Input number in Textfield: "));
-        scop = new JComboBox();
-        setScop(scop);
-        getScop().setEnabled(false);
-        cond_name = new JComboBox();
-        setCond_name(cond_name);
-        getCond_name().setEnabled(false);
-        cond_symbol = new JComboBox();
-        setCond_symbol(cond_symbol);
-        getCond_symbol().setEnabled(false);
-
-        //Creat query_input field, then set number
-        query_input = new JTextField(5);
-        setQuery_input(query_input);
-        getQuery_input().setEditable(false);
-        getQuery_input().setText("0.0");
-
         //Creat input button and main_info button, then set to attribute
-
         input = new JButton("Choose csv file");
         setInput(input);
         main_info = new JButton("Main information");
         setMain_info(main_info);
-        main_info.setEnabled(false);
 
-        init = new JButton("initial");
-        setInit(init);
-        init.setEnabled(false);
-        addContinue = new JButton("Add Condition");
-        setAddContinue(addContinue);
-        addContinue.setEnabled(false);
-        addFinish = new JButton("Add Finish");
-        setAddFinish(addFinish);
-        addFinish.setEnabled(false);
-
+        //Creat query_input field, then set to attribute
+        add(new JLabel("Input your query"));
+        query_input = new JTextField(40);
+        setQuery_input(query_input);
+        getQuery_input().setEditable(false);
+        getQuery_input().setText("I can't being edit now, please input the target files first.");
         //Display some information in this area
         information = new JTextArea(4,50);
-
         //Set the default show area
         show = new JTextArea(11,50);
         setShow(show);
@@ -279,12 +172,12 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
                 "Thank you for cooperation O(∩_∩)O"
         );
 
-        validate = new JButton("Get Result");
+        check = new JButton("query legality check");
+        setCheck(check);
+        validate = new JButton("Validate");
         setValidate(validate);
-        validate.setEnabled(false);
         reset = new JButton("Reset");
         setReset(reset);
-        reset.setEnabled(false);
     }
 
     //事件处理函数
@@ -293,78 +186,21 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
         Object source = e.getSource();
 
         //reset button
-        if (source == init){
-            String sco = getScop().getSelectedItem().toString();
-            String condName = getCond_name().getSelectedItem().toString();
-            String condSymbol = getCond_symbol().getSelectedItem().toString();
-            String condNum = getQuery_input().getText();
-            setSTR("select " + sco + " where " + condName + " " + condSymbol + " " + condNum);
-
-            getShow().setText("OK, your searching query now is:" + "\r\n" +
-                    getSTR() + "\r\n" +
-                    "" + "\r\n" +
-                    "1.You can continue add new condition in the query." +"\r\n" +
-                    "2.Select the conditions and input number, then click the button \"Add condition\"." +"\r\n" +
-                    "3.If you don't want add any new searching condition, click the button \"Add finish\""
-            );
-
-            getAddContinue().setEnabled(true);
-            getAddFinish().setEnabled(true);
-        }
-
-        else if (source == addContinue){
-            String str1 = getSTR();
-
-            String condName = getCond_name().getSelectedItem().toString();
-            String condSymbol = getCond_symbol().getSelectedItem().toString();
-            String condNum = getQuery_input().getText();
-            setSTR(str1 + " and " + condName + " " + condSymbol + " " + condNum);
-
-            getShow().setText("OK, your searching query now is:" + "\r\n" +
-                    getSTR() + "\r\n" +
-                    "" + "\r\n" +
-                    "1.You can continue add new condition in the query."+"\r\n" +
-                    "2.If you want finish input condition, click the button \"Add finish\""
-            );
-
-            getScop().setEnabled(false);
-        }
-
-        else if (source == addFinish){
-            getShow().setText("OK, your searching query now is:" + "\r\n" +
-                    getSTR() + "\r\n" +
-                    "" + "\r\n" +
-                    "1.Now click button \"Get result\" to get the result.");
-            getValidate().setEnabled(true);
-            getReset().setEnabled(true);
-
-            getScop().setEnabled(false);
-            getCond_name().setEnabled(false);
-            getCond_symbol().setEnabled(false);
-            getQuery_input().setEditable(false);
-            getInit().setEnabled(false);
-            getAddContinue().setEnabled(false);
-        }
-
-        else if (source == reset){
+        if (source == reset){
             getQuery_input().setText("");
-            setSTR("");
             getShow().setText(
                     "You already input the files, you can type searching query directly now, tutorial is below."
-                            +"\r\n" +"1.Select the scope and conditions in drop down box, make sure select all of them."
-                            +"\r\n" +"2.Click initial button, then you will have new notice message."
-
+                            +"\r\n" +"1.Input searching query in the input field on the top."
+                            +"\r\n" +"2.The syntax format is:\"select kind(red/white) where condition(qual > 5)\", you can use \"and\" to add more conditons"
+                            +"\r\n" +"3.For example: select red where qual > 5 and ph < 5"
+                            +"\r\n" +"4.Then click \"check legality\" button to check syntax is right or not."
+                            +"\r\n" +"5.If no wrong, you can continue to click \"validate\" to get the result"
                             +"\r\n" +"\r\n"
                             +"\r\n" +"Remember1: You can click \"Main information\" button to get some key information."
                             +"\r\n" +"Remember2: If you click \"reset\", you don't need to choose csv file again, just search."
 
             );
-            getScop().setEnabled(true);
-            getCond_name().setEnabled(true);
-            getCond_symbol().setEnabled(true);
-            getQuery_input().setEditable(true);
-            getInit().setEnabled(true);
-            getAddContinue().setEnabled(true);
+            getQuery_input().setText("Warning: Don't input again, you can type query directly now.");
         }
 
         //input button
@@ -466,21 +302,17 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
                     }
                     setSavingWineSamples(wines);
                     getShow().setText("input success! All right, you can continue your searching work, congratulations!"
-                            +"\r\n" +"1.Select the scope and conditions in drop down box, make sure select all of them."
-                            +"\r\n" +"2.Click initial button, then you will have new notice message."
-
+                            +"\r\n" +"1.Input searching query in the input field on the top."
+                            +"\r\n" +"2.The syntax format is:\"select kind(red/white) where condition(qual > 5)\", you can use \"and\" to add more conditons"
+                            +"\r\n" +"3.For example: select red where qual > 5 and ph < 5"
+                            +"\r\n" +"4.Then click \"check legality\" button to check syntax is right or not."
+                            +"\r\n" +"5.If no wrong, you can continue to click \"validate\" to get the result"
                             +"\r\n" +"\r\n"
                             +"\r\n" +"Remember1: You can click \"Main information\" button to get some key information."
                             +"\r\n" +"Remember2: If you click \"reset\", you don't need to choose csv file again, just search."
                     );
-                    //set the button can be clicked
-                    getInit().setEnabled(true);
-                    getMain_info().setEnabled(true);
-                    getScop().setEnabled(true);
-                    getCond_name().setEnabled(true);
-                    getCond_symbol().setEnabled(true);
                     getQuery_input().setEditable(true);
-                    getQuery_input().setText("0.0");
+                    getQuery_input().setText("Now you can edit me! Remember delete this word first!");
                 }
                 catch (FileNotFoundException e1) {
                     e1.printStackTrace();
@@ -532,13 +364,54 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
             getInformation().append("5. The worst quality in wine samples is : quality " + bot + "\r\n");
         }
 
+        //query check button
+        else if (source == check){
+            getShow().setText("");
+
+            //获取textField值
+            String intStr = getQuery_input().getText();
+
+            //The code below is used to detect the problem of input
+            //****************************************************************
+            String intstr = intStr.toLowerCase();
+
+            Pattern pattern = Pattern.compile("[0-9]$");
+            Matcher matcher = pattern.matcher(intstr);
+            Boolean HasNumber = false;
+            if (matcher.find()){
+                HasNumber = true;
+            }
+            //RegEX used to detect number data
+
+            if (intstr.contains("select") && intstr.contains("where") && HasNumber){
+                getShow().append("This searching query is great and it could be used" +"\r\n");
+                getShow().append("Everything is ok, you can click validate button to get result." +"\r\n");
+            }
+            else if (!intstr.contains("select") && intstr.contains("where") && HasNumber){
+                getShow().append("Error: This searching query is short of keyword \'select\'!" +"\r\n");
+                getShow().append("Please fix it and try again." +"\r\n");
+            }
+            else if (intstr.contains("select") && !intstr.contains("where") && HasNumber){
+                getShow().append("Error: This searching query is short of keyword \'where\'!" +"\r\n");
+                getShow().append("Please fix it and try again." +"\r\n");
+            }
+            else if (intstr.contains("select") && intstr.contains("where") && !HasNumber){
+                getShow().append("Error: This searching query is short of an available number !" +"\r\n");
+                getShow().append("Please fix it and try again." +"\r\n");
+            }
+            else {
+                getShow().append("Error: This searching query is not matches right format !" +"\r\n");
+                getShow().append("Please fix it and try again." +"\r\n");
+            }
+        }
+
         else if (source == validate){
             getShow().setText("");
 
             //获取textField值
-            String str = getSTR();
+            String str = getQuery_input().getText();
+
             String intStr = str.toLowerCase();
-            System.out.println(intStr);
 
             Query qry = new Query();
             //Pick up the scope and conditions via two function below
@@ -1011,9 +884,6 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
             getShow().append("Scope: "+qry.getScope()+"\r\n");
             getShow().append("--------------------------------------"+"\r\n");
             getShow().append("\n" + "Searching Result: "+"\r\n");
-
-            int n =0;
-
             if (temp.size()==0){
                 getShow().append("No wine sample meeting this conditions"+"\r\n");
             }
@@ -1033,10 +903,9 @@ public class InterfaceFrame extends CentreFrame implements ActionListener{
                             + " [V_acid: " + temp.get(m).getV_acid() + "]"
                             + " [F_acid: " + temp.get(m).getF_acid() + "]" +"\r\n");
                     m++;
-                    n = m;
                 }
             }
-            getShow().append("\n"+"There are "+n+" samples matched condition");
+
             getShow().append("\n"+"Searching ended");
 
 
